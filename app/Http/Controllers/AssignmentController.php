@@ -12,7 +12,19 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
 class AssignmentController extends Controller
-{
+{    
+    public function gotoUploadAssignmentByTeacherPage($code, $session)
+    {
+        $course = Course::where('code', $code)->first();
+        //$materials = Material::where('course_code', $code)->where('session', $session)->get();
+        $assignments = Assignment::where('course_code', $code)->where('session', $session)->get();
+        return view('assignments.addAssignmentByTeacher' , [
+            'course' => $course,
+            'session' => $session, 
+            'assignments' => $assignments, 
+        ]);
+    }
+
     public function addAssignment(Request $request, $course_code, $session)
     {
         $request->validate([
@@ -111,4 +123,6 @@ class AssignmentController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
+
+    
 }

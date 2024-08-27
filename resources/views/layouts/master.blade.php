@@ -109,6 +109,11 @@
         <li>
             <a href="{{ route('gotoTeachersCoursesPage') }}" class="block py-2 px-3 {{ request()->routeIs('gotoTeachersCoursesPage') || request()->routeIs('gotoTeachersCourseViewPage') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Your Courses</a>
         </li>
+        
+        @if((request()->routeIs('gotoTeachersCourseViewPage') || request()->routeIs('gotoUploadMaterialByTeacherPage')))
+        @yield('content2')
+
+        @endif
         @endif
         </ul>
     </div>

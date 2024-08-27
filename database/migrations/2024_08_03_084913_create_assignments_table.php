@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('session');
             $table->string('title');
             $table->text('description');
+            $table->string('file')->nullable();
             $table->date('deadline');
             $table->timestamps();
         });

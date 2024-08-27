@@ -104,7 +104,7 @@ class CourseController extends Controller
             'course' => $course,
             'session' => $session,
             'materials' => $materials,
-            'assignments' => $assignments,
+            'assignments' => $assignments, 
         ]);
     }
 }

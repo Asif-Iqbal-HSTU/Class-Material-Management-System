@@ -51,6 +51,7 @@ Route::get('/course/teacher',[CourseController::class,'gotoTeachersCoursesPage']
 Route::get('/teacher/course/{code}/{session}',[CourseController::class,'gotoTeachersCourseViewPage'])->name('gotoTeachersCourseViewPage')->middleware(TeacherMiddleware::class);
 
 //materialsupload
+Route::get('/add/material/page/{code}/{session}',[MaterialController::class,'gotoUploadMaterialByTeacherPage'])->name('gotoUploadMaterialByTeacherPage')->middleware(TeacherMiddleware::class);
 Route::post('/add/material/{course_code}/{session}',[MaterialController::class,'addMaterial'])->name('addMaterial')->middleware(TeacherMiddleware::class);
 //Route::get('/download/material/{path}',[MaterialController::class,'downloadMaterial'])->name('downloadMaterial')->middleware(TeacherMiddleware::class);
 //Route::get('/download/material/{file}', [MaterialController::class, 'downloadMaterial'])->name('downloadMaterial')->middleware(TeacherMiddleware::class);
@@ -58,5 +59,8 @@ Route::get('/download/material/{id}', [MaterialController::class, 'downloadMater
 Route::post('/edit/material/{id}',[MaterialController::class,'editMaterial'])->name('editMaterial')->middleware(TeacherMiddleware::class);
 
 
+Route::get('/add/assignment/page/{code}/{session}',[AssignmentController::class,'gotoUploadAssignmentByTeacherPage'])->name('gotoUploadAssignmentByTeacherPage')->middleware(TeacherMiddleware::class);
+
 Route::post('/add/assignment/{course_code}/{session}',[AssignmentController::class,'addAssignment'])->name('addAssignment')->middleware(TeacherMiddleware::class);
 Route::get('/download/assignment/{id}', [AssignmentController::class, 'downloadAssignment'])->name('downloadAssignment')->middleware(TeacherMiddleware::class);
+Route::post('/edit/assignment/{id}',[AssignmentController::class,'editAssignment'])->name('editAssignment')->middleware(TeacherMiddleware::class);

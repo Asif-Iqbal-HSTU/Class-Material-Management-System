@@ -12,6 +12,18 @@ use Illuminate\Support\Facades\Storage;
 
 class MaterialController extends Controller
 {
+    public function gotoUploadMaterialByTeacherPage($code, $session)
+    {
+        $course = Course::where('code', $code)->first();
+        $materials = Material::where('course_code', $code)->where('session', $session)->get();
+        //$assignments = Assignment::where('course_code', $code)->where('session', $session)->get();
+        return view('materials.addMaterialByTeacher' , [
+            'course' => $course,
+            'session' => $session, 
+            'materials' => $materials, 
+        ]);
+    }
+
     public function addMaterial(Request $request, $course_code, $session)
     {
         $request->validate([
