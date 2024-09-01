@@ -10,7 +10,7 @@ use App\Models\Student;
 use App\Models\Faculty;
 use App\Models\Department;
 
-class signupController extends Controller
+class SignupController extends Controller
 {
     public function gotoSignupChoicePage()
     {

@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
             'level' => '1',
             'semester' => 'i',
             'session' => '2017',
-            'degree' => '1',
+            'degree' => 'B.Sc. in CSE',
             'email' => 't1@example.com',
             'password' => Hash::make('password'),
         ]);

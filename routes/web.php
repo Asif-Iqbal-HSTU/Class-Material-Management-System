@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\StudentMiddleware;
 use App\Http\Middleware\TeacherMiddleware;
 use App\Http\Controllers\LoginController; 
 use App\Http\Controllers\SignupController; 
@@ -9,6 +10,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\AssignmentController;
+use App\Http\Controllers\ClassRoutineController;
+use App\Http\Controllers\StudentMaterialController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -55,7 +58,7 @@ Route::get('/add/material/page/{code}/{session}',[MaterialController::class,'got
 Route::post('/add/material/{course_code}/{session}',[MaterialController::class,'addMaterial'])->name('addMaterial')->middleware(TeacherMiddleware::class);
 //Route::get('/download/material/{path}',[MaterialController::class,'downloadMaterial'])->name('downloadMaterial')->middleware(TeacherMiddleware::class);
 //Route::get('/download/material/{file}', [MaterialController::class, 'downloadMaterial'])->name('downloadMaterial')->middleware(TeacherMiddleware::class);
-Route::get('/download/material/{id}', [MaterialController::class, 'downloadMaterial'])->name('downloadMaterial')->middleware(TeacherMiddleware::class);
+Route::get('/download/material/{id}', [MaterialController::class, 'downloadMaterial'])->name('downloadMaterial');
 Route::post('/edit/material/{id}',[MaterialController::class,'editMaterial'])->name('editMaterial')->middleware(TeacherMiddleware::class);
 
 
@@ -64,3 +67,15 @@ Route::get('/add/assignment/page/{code}/{session}',[AssignmentController::class,
 Route::post('/add/assignment/{course_code}/{session}',[AssignmentController::class,'addAssignment'])->name('addAssignment')->middleware(TeacherMiddleware::class);
 Route::get('/download/assignment/{id}', [AssignmentController::class, 'downloadAssignment'])->name('downloadAssignment')->middleware(TeacherMiddleware::class);
 Route::post('/edit/assignment/{id}',[AssignmentController::class,'editAssignment'])->name('editAssignment')->middleware(TeacherMiddleware::class);
+
+Route::get('/routine/upload', [ClassRoutineController::class, 'uploadPage'])->name('routine.upload.page');
+Route::post('/routine/upload', [ClassRoutineController::class, 'upload'])->name('routine.upload');
+
+
+Route::post('/add/material/student',[StudentMaterialController::class,'addStudentMaterial'])->name('addStudentMaterial')->middleware(StudentMiddleware::class);
+Route::get('/add/material/student',[StudentMaterialController::class,'gotoUploadMaterialByStudentPage'])->name('gotoUploadMaterialByStudentPage')->middleware(StudentMiddleware::class);
+
+Route::post('/edit/material/student/{id}',[StudentMaterialController::class,'editStudentMaterial'])->name('editStudentMaterial')->middleware(StudentMiddleware::class);
+
+Route::get('/course/student',[CourseController::class,'gotoStudentCoursesPage'])->name('gotoStudentCoursesPage')->middleware(StudentMiddleware::class);
+Route::get('/student/course/{code}/{session}',[CourseController::class,'gotoStudentsCourseViewPage'])->name('gotoStudentsCourseViewPage')->middleware(StudentMiddleware::class);

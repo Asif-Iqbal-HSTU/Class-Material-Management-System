@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+    @notifyCss
 </head>
 <body class="bg-gray-100">
   
@@ -30,22 +31,22 @@
             <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{session('curr_user')->email}}</span>
             </div>
             <ul class="py-2" aria-labelledby="user-menu-button">
-            @if(session('user_role') == 'Admin')
-            <li>
-                <a href="{{ route('gotoAdminDashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
-            </li>
-            @elseif(session('user_role') == 'Teacher')
-            <li>
-                <a href="{{ route('gotoTeacherDashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
-            </li>
-            @else
-            <li>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
-            </li>
-            @endif
-            <li>
-                <a href="{{ route('logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
-            </li>
+                @if(session('user_role') == 'Admin')
+                <li>
+                    <a href="{{ route('gotoAdminDashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
+                </li>
+                @elseif(session('user_role') == 'Teacher')
+                <li>
+                    <a href="{{ route('gotoTeacherDashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
+                </li>
+                @else
+                <li>
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
+                </li>
+                @endif
+                <li>
+                    <a href="{{ route('logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                </li>
             </ul>
         </div>
         <button data-collapse-toggle="navbar-user" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-user" aria-expanded="false">
@@ -60,6 +61,9 @@
         @if(session('user_role') == 'Admin')
         <li>
             <a href="{{ route('gotoAdminDashboard') }}" class="block py-2 px-3 {{ request()->routeIs('gotoAdminDashboard') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Dashboard</a>
+        </li>
+        <li>
+            <a href="{{ route('routine.upload.page') }}" class="block py-2 px-3 {{ request()->routeIs('routine.upload.page') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Upload Routine</a>
         </li>
         <li>
             <button id="UsersNavbarLink" data-dropdown-toggle="UsersNavbar" class="{{ request()->routeIs('gotoAdminSignupPage') || request()->routeIs('gotoTeacherSignupPage') || request()->routeIs('gotoStudentSignupPage') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} flex items-center justify-between w-full py-2 px-3 rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent">
@@ -110,10 +114,20 @@
             <a href="{{ route('gotoTeachersCoursesPage') }}" class="block py-2 px-3 {{ request()->routeIs('gotoTeachersCoursesPage') || request()->routeIs('gotoTeachersCourseViewPage') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Your Courses</a>
         </li>
         
-        @if((request()->routeIs('gotoTeachersCourseViewPage') || request()->routeIs('gotoUploadMaterialByTeacherPage')))
+        @if((request()->routeIs('gotoTeachersCourseViewPage') || request()->routeIs('gotoUploadMaterialByTeacherPage') || request()->routeIs('gotoUploadAssignmentByTeacherPage')))
         @yield('content2')
 
         @endif
+        @elseif(session('user_role') == 'Student')
+        <li>
+            <a href="{{ route('gotoStudentDashboard') }}" class="block py-2 px-3 {{ request()->routeIs('gotoTeacherDashboard') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Dashboard</a>
+        </li>
+        <li>
+            <a href="{{ route('gotoStudentCoursesPage') }}" class="block py-2 px-3 {{ request()->routeIs('gotoStudentCoursesPage') || request()->routeIs('gotoStudentsCourseViewPage') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Your Courses</a>
+        </li>
+        <li>
+            <a href="{{ route('gotoUploadMaterialByStudentPage') }}" class="block py-2 px-3 {{ request()->routeIs('gotoUploadMaterialByStudentPage') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Your Resources</a>
+        </li>
         @endif
         </ul>
     </div>
@@ -127,6 +141,7 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
     <script src="https://kit.fontawesome.com/dbf830dbab.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
-
+    <x-notify::notify />
+        @notifyJs
 </body>
 </html>

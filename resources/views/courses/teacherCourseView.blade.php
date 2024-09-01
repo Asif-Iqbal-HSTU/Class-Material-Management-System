@@ -147,66 +147,10 @@
             </div>
         </div>
         <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="assignment" role="tabpanel" aria-labelledby="assignment-tab">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">             
-
-                <div class="flex flex-col w-full bg-white border-gray-200 rounded-lg sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700  min-h-full">
-                        <form class="space-y-6" action="{{ route('addAssignment', ['course_code'=> $course->code, 'session'=> $session]) }}" method="POST" enctype="multipart/form-data">
-                            <h5 class="text-xl font-medium text-gray-900 dark:text-white">Create Assignment</h5>
-                            @csrf
-                            @if(\Illuminate\Support\Facades\Session::has('error'))
-                                <div id="error-message" class="px-4 py-2 bg-red-600 text-white rounded-md shadow-sm text-sm mb-5">
-                                    {{ \Illuminate\Support\Facades\Session::get('error') }}
-                                </div>
-                            @endif
-
-                            @if(\Illuminate\Support\Facades\Session::has('success'))
-                                <div id="success-message" class="px-4 py-2 bg-green-600 text-white rounded-md shadow-sm text-sm mb-5">
-                                    {{ \Illuminate\Support\Facades\Session::get('success') }}
-                                </div>
-                            @endif
-                            <div>
-                                <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
-                                <input type="title" name="title" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Content Title"/>
-                                @error('title')
-                                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            
-                            <div class="mb-4">
-                                <label for="description" class="block text-sm font-medium text-gray-700">Description*</label>
-                                <textarea id="description" name="description" rows="4" class="block mt-1 p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write product description here"></textarea>
-                                @error('description')
-                                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                                @enderror
-                            </div>                        
-                            
-                            <div class="mb-4">                        
-                                <label for="file" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Upload Document (optional)</label>
-                                <input id="file" name="file" type="file" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
-                                @error('file')
-                                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <label for="deadline" class="block text-sm font-medium text-gray-900 dark:text-white mt-0">Deadline</label>
-                            <div class="relative w-full">                            
-                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
-                                    </svg>
-                                </div>
-                                <input id="deadline" name="deadline" datepicker datepicker-buttons datepicker-autoselect-today type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">
-                            </div>
-
-                            
-                            <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Upload Material</button>
-                            
-                            
-                        </form>
-                    </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">    
 
                     <div class="flex flex-col w-full bg-white border-gray-200 rounded-lg sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700  min-h-full">
-                        <h5 class="text-xl mb-5 font-medium text-gray-900 dark:text-white">Previous Course Materials</h5>
+                        <h5 class="text-xl mb-5 font-medium text-gray-900 dark:text-white">Previous Assignments</h5>
                         
                         @foreach($assignments as $assignment)
                         <div class="p-6 mb-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -269,6 +213,14 @@
                                                     <label for="file" class="block text-sm font-medium text-gray-700">Upload Material</label>
                                                     <input id="file" name="file" type="file" class="mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" />
                                                     @error('file')
+                                                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="mb-4">
+                                                    <label for="deadline" class="block text-sm font-medium text-gray-700">Deadline (YYYY-mm-dd)</label>
+                                                    <input type="text" name="deadline" id="deadline" value="{{ $assignment->deadline }}" class="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                                                    @error('deadline')
                                                         <span class="text-red-500 text-sm">{{ $message }}</span>
                                                     @enderror
                                                 </div>

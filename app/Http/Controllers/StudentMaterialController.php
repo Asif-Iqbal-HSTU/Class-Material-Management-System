@@ -5,28 +5,28 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\Distribution;
+use App\Models\StudentMaterial;
 use App\Models\Teacher;
 use App\Models\Material;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Brian2694\Toastr\Facades\Toastr;
 
-class MaterialController extends Controller
+class StudentMaterialController extends Controller
 {
-    public function gotoUploadMaterialByTeacherPage($code, $session)
+    public function gotoUploadMaterialByStudentPage()
     {
-        $course = Course::where('code', $code)->first();
-        $materials = Material::where('course_code', $code)->where('session', $session)->get();
+        $user = Session::get('curr_user');
+        $materials = StudentMaterial::where('s_id', $user->s_id)->get();
         //$assignments = Assignment::where('course_code', $code)->where('session', $session)->get();
-        return view('materials.addMaterialByTeacher' , [
-            'course' => $course,
-            'session' => $session, 
+        return view('materials.addMaterialByStudent' , [
             'materials' => $materials, 
         ]);
     }
 
-    public function addMaterial(Request $request, $course_code, $session)
+    public function addStudentMaterial(Request $request)
     {
+        $user = Session::get('curr_user');
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
@@ -35,15 +35,14 @@ class MaterialController extends Controller
         $materialFilePath = $this->uploadFile($request, 'file', 'public/materialFile');
 
         try {
-            Material::create([
-                'course_code' => $course_code,
-                'session' => $session,
+            StudentMaterial::create([
+                's_id' => $user->s_id,
                 'title' => $request->title,
                 'description' => $request->description,
                 'file' => $materialFilePath,
             ]);
             //return redirect()->back()->with('success', 'Material Added!')->with('active_tab', 'material');
-            notify()->success('Laravel Notify is awesome!');
+            notify()->success('Material uploaded!');
             return redirect()->back()->with('success', 'Material Added!')->with('activeTab', 'material-tab');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage())->with('active_tab', 'material');
@@ -83,17 +82,13 @@ class MaterialController extends Controller
         }
     }
 
-    public function editMaterialPage($id)
-    {
-        $material = \App\Models\Material::findOrFail($id);
-        return view('materials.editMaterialPage', [
-            'material' => $material,
-        ]);
-    }
+    
 
-    public function editMaterial(Request $request, $id)
+    public function editStudentMaterial(Request $request, $id)
     {
-        $material = \App\Models\Material::findOrFail($id);
+        //dd('HI');
+        $material = \App\Models\StudentMaterial::findOrFail($id);
+        //dd($material->title);
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
@@ -114,7 +109,7 @@ class MaterialController extends Controller
                 'description' => $request->description,
                 'file' => $materialFilePath,
             ]);
-            return redirect()->back()->with('message', 'Material Updated!');
+            return redirect()->back()->with('success', 'Material Updated!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }

@@ -116,6 +116,7 @@ class AssignmentController extends Controller
             $assignment->update([
                 'title' => $request->title,
                 'description' => $request->description,
+                'deadline' => $request->deadline,
                 'file' => $assignmentFilePath,
             ]);
             return redirect()->back()->with('success', 'Assignment Updated!');
